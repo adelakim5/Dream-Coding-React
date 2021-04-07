@@ -22,21 +22,21 @@ nav {
 }
 
 .navbar-count,
-.input-addButton,
-.resetAll-button {
+.add-button,
+.reset-button {
   background-color: green;
   color: white;
 }
 
-.input-habit {
+.add-form {
   display: flex;
   align-items: center;
   height: 4rem;
 }
 
 input,
-.input-addButton,
-.resetAll-button {
+.add-button,
+.reset-button {
   margin-left: 1rem;
   font-size: 1.5rem;
 }
@@ -46,8 +46,8 @@ input {
   border-radius: 2px;
 }
 
-.input-addButton,
-.resetAll-button {
+.add-button,
+.reset-button {
   padding: 3px 10px;
 }
 
@@ -89,8 +89,8 @@ button {
 }
 
 .habit-button:hover,
-.input-addButton:hover,
-.resetAll-button:hover {
+.add-button:hover,
+.reset-button:hover {
   opacity: 0.8;
 }
 
