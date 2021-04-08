@@ -1,8 +1,16 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusSquare, faMinusSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 
-class Habit extends Component {
+class Habit extends PureComponent {
+  componentDidMount() {
+    console.log(`habit: ${this.props.habit.name} mounted`);
+  }
+
+  componentWillUnmount() {
+    console.log(`habit: ${this.props.habit.name} willl unmounted`);
+  }
+
   handleIncrement = () => {
     this.props.onIncrement(this.props.habit);
   };
@@ -17,6 +25,7 @@ class Habit extends Component {
 
   render() {
     const { name, count } = this.props.habit;
+
     return (
       <li className="habit">
         <span className="habit-name">{name}</span>
