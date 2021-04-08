@@ -3,30 +3,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusSquare, faMinusSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const Habit = (props) => {
-  const handleIncrement = () => {
-    props.onIncrement(props.habit);
-  };
-
-  const handleDecrement = () => {
-    props.onDecrement(props.habit);
-  };
-
-  const handleDelete = () => {
-    props.onDelete(props.habit);
-  };
-
   const { name, count } = props.habit;
   return (
     <li className="habit">
       <span className="habit-name">{name}</span>
       <span className="habit-count">{count}</span>
-      <button className="habit-button habit-increase" onClick={handleIncrement}>
+      <button className="habit-button habit-increase" onClick={(_) => props.onIncrement(props.habit)}>
         <FontAwesomeIcon icon={faPlusSquare} />
       </button>
-      <button className="habit-button habit-decrease" onClick={handleDecrement}>
+      <button className="habit-button habit-decrease" onClick={(_) => props.onDecrement(props.habit)}>
         <FontAwesomeIcon icon={faMinusSquare} />
       </button>
-      <button className="habit-button habit-delete" onClick={handleDelete}>
+      <button className="habit-button habit-delete" onClick={(_) => props.onDelete(props.habit)}>
         <FontAwesomeIcon icon={faTrash} />
       </button>
     </li>

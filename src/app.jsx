@@ -37,10 +37,6 @@ const App = (props) => {
     setHabits([...habits.filter((item) => item.id !== habit.id)]);
   };
 
-  const addHabit = (habit) => {
-    setHabits([...habits, { name: habit, count: 0, id: Date.now() }]);
-  };
-
   const reset = () => {
     setHabits(
       habits.map((item) => {
@@ -53,7 +49,7 @@ const App = (props) => {
   return (
     <>
       <Navbar totalCount={[...habits.filter((item) => item.count > 0)].length} />
-      <Input onAdd={addHabit} />
+      <Input onAdd={(habit) => setHabits([...habits, { name: habit, count: 0, id: Date.now() }])} />
       <Habits habits={habits} onIncrement={handleIncrement} onDecrement={handleDecrement} onDelete={handleDelete} />
       <Reset onReset={reset} />
     </>

@@ -1,16 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 
-class Reset extends Component {
-  reset = () => {
-    this.props.onReset();
-  };
-  render() {
-    return (
-      <button className="resetAll-button" onClick={this.reset}>
-        Reset All
-      </button>
-    );
-  }
-}
+const Reset = (props) => (
+  <button className="resetAll-button" onClick={props.onReset}>
+    Reset All
+  </button>
+);
 
 export default Reset;
