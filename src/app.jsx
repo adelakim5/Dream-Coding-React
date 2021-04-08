@@ -1,70 +1,63 @@
-import { Component } from "react";
 import "./app.css";
-// import Habit from "./components/habit";
+import { useState } from "react";
 import Habits from "./components/habits";
 import Input from "./components/input";
 import Navbar from "./components/navbar";
 import Reset from "./components/reset";
 
-class App extends Component {
-  state = {
-    habits: [
-      { name: "Reading", count: 0, id: 1 },
-      { name: "Running", count: 0, id: 2 },
-      { name: "Coding", count: 0, id: 3 },
-    ],
-  };
+const App = (props) => {
+  const [habits, setHabits] = useState([
+    { name: "Reading", count: 0, id: 1 },
+    { name: "Running", count: 0, id: 2 },
+    { name: "Coding", count: 0, id: 3 },
+  ]);
 
-  addHabit = (newHabit) => {
-    const habits = [...this.state.habits]; // 여기서 바로 push하면 안됨
-    if (newHabit !== "") habits.push({ name: newHabit, count: 0, id: this.state.habits.length + 1 }); // 여기서 push를 하면 잘 됨. 또 위에서 그냥 뒤에 넣어주는건 잘됨. 왜지?
-    this.setState({ habits });
-  };
-
-  handleIncrement = (habit) => {
-    const habits = this.state.habits.map((item) => {
-      if (item.id === habit.id) {
-        return { ...habit, count: habit.count + 1 }; // count만 새로운 값으로 덮어쓰기
-      }
-      return item;
-    });
-    this.setState({ habits });
-  };
-
-  handleDecrement = (habit) => {
-    const habits = this.state.habits.map((item) => {
-      if (item.id === habit.id) {
-        const count = habit.count - 1;
-        return { ...habit, count: count >= 0 ? count : 0 }; // count만 새로운 값으로 덮어쓰기
-      }
-      return item;
-    });
-    this.setState({ habits });
-  };
-
-  handleDelete = (habit) => {
-    const habits = [...this.state.habits].filter((e) => e !== habit);
-    this.setState({ habits });
-  };
-
-  reset = () => {
-    const habits = this.state.habits.map((habit) => {
-      if (habit.count !== 0) return { ...habit, count: 0 };
-      return habit;
-    });
-    this.setState({ habits });
-  };
-
-  render() {
-    return (
-      <>
-        <Navbar totalCount={this.state.habits.reduce((acc, val) => (acc += val.count), 0)} />
-        <Input onAdd={this.addHabit} />
-        <Habits habits={this.state.habits} onIncrement={this.handleIncrement} onDecrement={this.handleDecrement} onDelete={this.handleDelete} />
-        <Reset onReset={this.reset} />
-      </>
+  const handleIncrement = (habit) => {
+    setHabits(
+      habits.map((item) => {
+        if (item.id === habit.id) return { ...item, count: item.count + 1 };
+        return item;
+      })
     );
-  }
-}
+  };
+
+  const handleDecrement = (habit) => {
+    setHabits(
+      habits.map((item) => {
+        if (item.id === habit.id) {
+          const count = item.count - 1;
+          return { ...item, count: count >= 0 ? count : 0 };
+        }
+        return item;
+      })
+    );
+  };
+
+  const handleDelete = (habit) => {
+    setHabits([...habits.filter((item) => item.id !== habit.id)]);
+  };
+
+  const addHabit = (habit) => {
+    setHabits([...habits, { name: habit, count: 0, id: Date.now() }]);
+  };
+
+  const reset = () => {
+    setHabits(
+      habits.map((item) => {
+        if (item.count !== 0) return { ...item, count: 0 };
+        return item;
+      })
+    );
+  };
+
+  return (
+    <>
+      <Navbar totalCount={[...habits.filter((item) => item.count > 0)].length} />
+      <Input onAdd={addHabit} />
+      <Habits habits={habits} onIncrement={handleIncrement} onDecrement={handleDecrement} onDelete={handleDelete} />
+      <Reset onReset={reset} />
+    </>
+  );
+};
 
 export default App;

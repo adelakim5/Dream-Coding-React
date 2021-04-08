@@ -1,29 +1,22 @@
-import React, { Component } from "react";
+import React, { memo } from "react";
 
-class Input extends Component {
-  state = {
-    inputValue: "",
+const Input = memo((props) => {
+  const formRef = React.createRef();
+  const inputRef = React.createRef();
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const name = inputRef.current.value;
+    name && props.onAdd(name);
+    formRef.current.reset();
   };
 
-  handleChange = (e) => {
-    this.setState({ inputValue: e.target.value });
-  };
-
-  addHabit = () => {
-    this.props.onAdd(this.state.inputValue);
-    this.setState({ inputValue: "" });
-  };
-
-  render() {
-    return (
-      <div className="input-habit">
-        <input placeholder="Habit" onChange={this.handleChange} value={this.state.inputValue} />
-        <button className="input-addButton" onClick={this.addHabit}>
-          Add
-        </button>
-      </div>
-    );
-  }
-}
+  return (
+    <form ref={formRef} className="add-form" onSubmit={onSubmit}>
+      <input type="text" ref={inputRef} placeholder="Habit..." />
+      <button className="input-addButton">Add</button>
+    </form>
+  );
+});
 
 export default Input;
