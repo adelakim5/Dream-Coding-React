@@ -1,8 +1,15 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusSquare, faMinusSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 
-class Habit extends Component {
+class Habit extends PureComponent {
+  componentDidMount() {
+    console.log(`${this.props.habit.name} is mounted`);
+  }
+
+  componentWillUnmount() {
+    console.log(`${this.props.habit.name} will unmounted`);
+  }
   handleIncrement = () => {
     this.props.onIncrement(this.props.habit);
   };

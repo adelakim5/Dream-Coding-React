@@ -13,16 +13,19 @@ class App extends Component {
   };
 
   handleIncrement = (habit) => {
-    const habits = [...this.state.habits];
-    const index = habits.indexOf(habit);
-    habits[index].count++;
+    const habits = this.state.habits.map((item) => {
+      if (item.id === habit.id) return { ...item, count: item.count + 1 };
+      return item;
+    });
     this.setState({ habits });
   };
 
   handleDecrement = (habit) => {
-    const habits = [...this.state.habits];
-    const index = habits.indexOf(habit);
-    habits[index].count = habits[index].count > 0 ? habits[index].count - 1 : 0;
+    const habits = this.state.habits.map((item) => {
+      const count = item.count - 1;
+      if (item.id === habit.id) return { ...item, count: count >= 0 ? count : 0 };
+      return item;
+    });
     this.setState({ habits });
   };
 
@@ -32,7 +35,11 @@ class App extends Component {
   };
 
   resetAll = () => {
-    this.setState({ habits: [] });
+    const habits = this.state.habits.map((item) => {
+      if (item.count !== 0) return { ...item, count: 0 };
+      return item;
+    });
+    this.setState({ habits });
   };
 
   addHabit = (newHabit) => {
